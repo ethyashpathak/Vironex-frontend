@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../constants';
 import { FaThumbsUp, FaThumbsDown, FaFlag } from 'react-icons/fa';
+import { axiosAuth } from '../../utils/axiosConfig';
+import { useSelector } from 'react-redux';
 
 // Simple time ago function
 const timeAgo = (date) => {
@@ -38,10 +40,12 @@ const CommentCard = ({ comment }) => {
   const [replyContent, setReplyContent] = useState('');
   const [replies, setReplies] = useState(comment.replies || []);
   const [showReplies, setShowReplies] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const { status: isLoggedIn, userData } = useSelector(state => state.auth);
   
   const handleLikeComment = async () => {
     try {
-      await axios.post(`${server}/likes/toggle/c/${comment._id}`, {}, {
+      await axiosAuth.post(`${server}/likes/toggle/c/${comment._id}`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -55,6 +59,39 @@ const CommentCard = ({ comment }) => {
       console.error('Error toggling comment like:', err);
     }
   };
+
+  useEffect(() => {
+    console.log('Auth status in AddComment:', { isLoggedIn, userData });
+    
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.warn('No access token found, cannot fetch user profile');
+        return;
+      }
+      
+      try {
+        const response = await axios.get(`${server}/users/current-user`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          withCredentials: true
+        });
+        
+        console.log('User profile data response:', response.data);
+        
+        if (response.data?.data) {
+          setProfileData(response.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching user profile:', err);
+      }
+    };
+    
+    if (isLoggedIn) {
+      fetchUserProfile();
+    }
+  }, [isLoggedIn]);
   
   const handleReply = async (e) => {
     e.preventDefault();
@@ -62,7 +99,7 @@ const CommentCard = ({ comment }) => {
     if (!replyContent.trim()) return;
     
     try {
-      const response = await axios.post(`${server}/comments/${comment.video}`, {
+      const response = await axiosAuth.post(`${server}/comments/${comment.video}`, {
         content: replyContent,
         parentComment: comment._id
       }, {
@@ -84,9 +121,9 @@ const CommentCard = ({ comment }) => {
     }
   };
   
-  const handleUserClick = () => {
-    navigate(`/channel/${comment.owner?.username}`);
-  };
+  // const handleUserClick = () => {
+  //   navigate(`/channel/${comment.owner?.username}`);
+  // };
   
   return (
     <div className="mb-6">
@@ -94,11 +131,11 @@ const CommentCard = ({ comment }) => {
         {/* User Avatar */}
         <div 
           className="mr-3" 
-          onClick={handleUserClick}
+          //onClick={handleUserClick}
         >
           <img
-            src={comment.owner?.avatar}
-            alt={comment.owner?.fullName}
+            src={profileData?.avatar}
+            alt={profileData?.fullName}
             className="w-10 h-10 rounded-full object-cover cursor-pointer"
           />
         </div>
@@ -109,7 +146,7 @@ const CommentCard = ({ comment }) => {
           <div className="flex items-baseline mb-1">
             <span 
               className="font-medium mr-2 cursor-pointer hover:underline"
-              onClick={handleUserClick}
+              //onClick={handleUserClick}
             >
               {comment.owner?.fullName}
             </span>

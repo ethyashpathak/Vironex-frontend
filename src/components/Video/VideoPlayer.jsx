@@ -4,8 +4,7 @@ import axios from 'axios';
 import { server } from '../../constants';
 import { FaThumbsUp, FaThumbsDown, FaShare, FaFlag, FaRegBookmark } from 'react-icons/fa';
 import VideoGrid from './VideoGrid';
-import CommentCard from '../Comments/CommentCard';
-import AddComment from '../Comments/AddComment';
+import CommentsList from '../Comments/CommentsList';
 
 const VideoPlayer = () => {
   const { videoId } = useParams();
@@ -15,8 +14,6 @@ const VideoPlayer = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [comments, setComments] = useState([]);
-  const [commentsLoading, setCommentsLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscriberCount, setSubscriberCount] = useState(0);
   const [isSubscribing, setIsSubscribing] = useState(false);
@@ -86,26 +83,9 @@ const VideoPlayer = () => {
       }
     };
     
-    const fetchComments = async () => {
-      setCommentsLoading(true);
-      
-      try {
-        const response = await axios.get(`${server}/comments/${videoId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
-        });
-        
-        setComments(response.data.data || []);
-        setCommentsLoading(false);
-      } catch (err) {
-        console.error('Error fetching comments:', err);
-        setCommentsLoading(false);
-      }
-    };
+    // Comments are now handled by the CommentsList component
     
     fetchVideoDetails();
-    fetchComments();
   }, [videoId]);
 
   const handleLikeVideo = async () => {
@@ -142,10 +122,6 @@ const VideoPlayer = () => {
 
     }
     console.log('Like hogya');
-  };
-
-  const handleAddComment = async (newComment) => {
-    setComments(prev => [newComment, ...prev]);
   };
   
   const handleSubscribe = async () => {
@@ -422,35 +398,8 @@ console.log("FINAL VIDEO URL:", video?.videoFile);
             
 
             <div className="mt-6">
-              <h3 className="text-lg font-medium mb-4">
-                {video.comments || 0} Comments
-              </h3>
-              
-
-              <AddComment 
-                videoId={videoId}
-                onCommentAdded={handleAddComment}
-              />
-              
-
-              <div className="mt-6">
-                {commentsLoading ? (
-                  <div className="text-center py-4">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#ff3b5c] mx-auto"></div>
-                  </div>
-                ) : comments.length > 0 ? (
-                  comments.map(comment => (
-                    <CommentCard 
-                      key={comment._id} 
-                      comment={comment}
-                    />
-                  ))
-                ) : (
-                  <div className="text-gray-400 text-center py-4">
-                    No comments yet. Be the first to comment!
-                  </div>
-                )}
-              </div>
+              {/* Using the new CommentsList component */}
+              <CommentsList videoId={videoId} />
             </div>
           </div>
         </div>

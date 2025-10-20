@@ -53,10 +53,10 @@ const serializedParams = JSON.stringify(params);
         let response;
         try {
           // Get a fresh axios instance with the current token
-          const freshAxiosAuth = axiosAuth();
+         // const freshAxiosAuth = axiosAuth();
           
           // Use the fresh instance for the request
-          response = await freshAxiosAuth.get(`${endpoint}`, {
+          response = await axiosAuth.get(`${endpoint}`, {
             params: { ...params, limit, page: 1, sortBy: params.sortBy || 'createdAt', sortType: params.sortType || 'desc' },
           });
           console.log("Request successful using fresh axiosAuth instance");
