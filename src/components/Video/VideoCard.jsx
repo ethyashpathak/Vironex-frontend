@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { axiosAuth } from '../../utils/axiosConfig';
 import { server } from '../../constants';
 import { FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 const timeAgo = (date) => {
   try {
@@ -51,7 +52,7 @@ const VideoCard = ({ video }) => {
           throw new Error("Username not available in video owner details");
         }
         
-        const response = await axiosAuth.get(`/users/channel/${username}`);
+        const response = await axios.get(`/users/channel/${username}`);
         setChannelDetails(response.data.data);
       } catch (err) {
         console.error('Error fetching channel details:', err);

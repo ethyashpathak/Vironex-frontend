@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { axiosAuth, getAxiosAuth } from '../../utils/axiosConfig';
+import { axiosAuth } from '../../utils/axiosConfig';
 import { refreshAccessToken, isTokenExpired } from '../../utils/tokenUtils';
 import { server } from '../../constants';
 import VideoCard from './VideoCard';
@@ -53,7 +53,7 @@ const serializedParams = JSON.stringify(params);
         let response;
         try {
           // Get a fresh axios instance with the current token
-          const freshAxiosAuth = getAxiosAuth();
+          const freshAxiosAuth = axiosAuth();
           
           // Use the fresh instance for the request
           response = await freshAxiosAuth.get(`${endpoint}`, {

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 import ChannelCardSkeleton from './ChannelCardSkeleton';
 
+
 const Subscriptions = () => {
   const [subscribedChannels, setSubscribedChannels] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -125,7 +126,7 @@ const Subscriptions = () => {
       
       // Make the API call to toggle subscription (which will unsubscribe in this case)
       // Based on the controller code, this endpoint toggles subscription status
-      const response = await axiosAuth.post(`${server}/subscriptions/c/${channelId}`);
+      const response = await axios.post(`${server}/subscriptions/c/${channelId}`);
       console.log('Unsubscribe response:', response.data);
       
       // Check if unsubscribe was successful
