@@ -1,6 +1,6 @@
 # ViroNex - Video Streaming Platform
 
-![ViroNex Logo](public/video%20streamer.png)
+<img src="public/video%20streamer.png" alt="ViroNex Logo" width="200"/>
 
 ViroNex is a feature-rich video streaming platform built with React and modern web technologies. It allows users to watch, upload, like, and share videos, subscribe to channels, and engage with content through comments.
 
