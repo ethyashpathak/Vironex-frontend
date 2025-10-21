@@ -352,9 +352,9 @@ const CommentCard = ({ comment }) => {
         >
           <img
             // FIXED: Use comment.owner.avatar
-            src={comment.owner?.avatar} 
+            src={comment.ownerDetails?.avatar} 
             // FIXED: Use comment.owner.fullName
-            alt={comment.owner?.fullName} 
+            alt={comment.ownerDetails?.fullName} 
             className="w-10 h-10 rounded-full object-cover cursor-pointer"
           />
         </div>
