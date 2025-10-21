@@ -348,7 +348,7 @@ const CommentCard = ({ comment }) => {
         {/* User Avatar */}
         <div 
           className="mr-3" 
-          onClick={handleUserClick} // UNCOMMENTED
+         // onClick={handleUserClick} // UNCOMMENTED
         >
           <img
             // FIXED: Use comment.owner.avatar
