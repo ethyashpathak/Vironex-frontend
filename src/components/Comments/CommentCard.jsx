@@ -341,6 +341,8 @@ const CommentCard = ({ comment }) => {
   const handleUserClick = () => {
      navigate(`/channel/${comment.owner?.username}`);
   };
+  
+  console.log(comment.ownerDetails);
   
   return (
     <div className="mb-6">
