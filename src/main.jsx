@@ -15,6 +15,7 @@ import LikedVideo from './components/Video/LikedVideo.jsx'
 import PlaylistGrid from './components/Playlists/PlaylistGrid.jsx'
 import Subscriptions from './components/Subscription/Subscriptions.jsx'
 import UploadVideo from './components/Video/UploadVideo.jsx'
+import WatchHistory from './components/Video/WatchHistory.jsx'
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -65,6 +66,13 @@ createRoot(document.getElementById('root')).render(
             <ProtectedRoute>
               <App>
                 <LikedVideo />
+              </App>
+            </ProtectedRoute>
+          } />
+          <Route path="/watch-history" element={
+            <ProtectedRoute>
+              <App>
+                <WatchHistory />
               </App>
             </ProtectedRoute>
           } />
