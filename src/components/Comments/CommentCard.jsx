@@ -326,7 +326,7 @@ const CommentCard = ({ comment }) => {
       });
       
       if (response.data.data) {
-        // The new reply (response.data.data) should have its own 'owner' object
+       // The new reply (response.data.data) should have its own 'owner' object
         setReplies(prev => [response.data.data, ...prev]);
         setReplyContent('');
         setShowReplyForm(false);
