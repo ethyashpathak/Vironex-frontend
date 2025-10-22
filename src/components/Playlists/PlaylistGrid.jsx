@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { server } from '../../constants';
 import PlayListCard from './PlayListCard';
+import { axiosAuth } from '../../utils/axiosConfig';
 
 const PlaylistGrid = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -15,7 +16,7 @@ const PlaylistGrid = () => {
       
       try {
         // Get the current user ID first
-        const userResponse = await axios.get(`${server}/users/current-user`, {
+        const userResponse = await axiosAuth.get(`${server}/users/current-user`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -24,7 +25,7 @@ const PlaylistGrid = () => {
         const userId = userResponse.data.data._id;
         
         // Then fetch the user's playlists
-        const response = await axios.get(`${server}/playlists/user/${userId}`, {
+        const response = await axiosAuth.get(`${server}/playlists/user/${userId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
