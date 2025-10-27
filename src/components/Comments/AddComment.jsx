@@ -16,7 +16,7 @@ const AddComment = ({ videoId, onCommentAdded }) => {
 
   // Fetch user profile data when component mounts
   useEffect(() => {
-    console.log('Auth status in AddComment:', { isLoggedIn, userData });
+    //console.log('Auth status in AddComment:', { isLoggedIn, userData });
     
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('accessToken');
@@ -33,7 +33,7 @@ const AddComment = ({ videoId, onCommentAdded }) => {
           withCredentials: true
         });
         
-        console.log('User profile data response:', response.data);
+        //console.log('User profile data response:', response.data);
         
         if (response.data?.data) {
           setProfileData(response.data.data);
