@@ -342,7 +342,7 @@ const CommentCard = ({ comment }) => {
      navigate(`/channel/${comment.owner?.username}`);
   };
   
-  console.log(comment.ownerDetails);
+  //console.log(comment.ownerDetails);
   
   return (
     <div className="mb-6">

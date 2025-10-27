@@ -33,7 +33,7 @@ const VideoPlayer = () => {
       setError('');
       
       const accessToken = localStorage.getItem('accessToken');
-      console.log('Fetching video with auth state:', !!accessToken);
+     // console.log('Fetching video with auth state:', !!accessToken);
       
       try {
         const response = await axios.get(`${server}/videos/${videoId}`, {
@@ -42,8 +42,8 @@ const VideoPlayer = () => {
           }
         });
         
-        console.log('Full API response:', response);
-        console.log('Video data from API:', response.data.data);
+        // console.log('Full API response:', response);
+        // console.log('Video data from API:', response.data.data);
         console.log('Response structure:', {
           responseData: response.data,
           videoData: response.data.data,
@@ -53,7 +53,7 @@ const VideoPlayer = () => {
         const videoData = response.data.data;
         
         // Log all available fields to see what we can use
-        console.log('All video fields:', Object.keys(videoData));
+       // console.log('All video fields:', Object.keys(videoData));
         
         // Store the video data directly
         setVideo(videoData);
@@ -97,7 +97,7 @@ const VideoPlayer = () => {
         }
       });
       
-      console.log('Like toggle API response:', response.data);
+      //console.log('Like toggle API response:', response.data);
       
       // After like operation, fetch the updated video details to get current like count from server
       const videoResponse = await axios.get(`${server}/videos/${videoId}`, {
@@ -107,7 +107,7 @@ const VideoPlayer = () => {
       });
       
       const updatedVideoData = videoResponse.data.data;
-      console.log('Updated video data after like:', updatedVideoData);
+      //console.log('Updated video data after like:', updatedVideoData);
       
       // Update local state with server data
       setVideo(updatedVideoData);
@@ -163,7 +163,7 @@ const VideoPlayer = () => {
         }
       );
       
-      console.log('Subscription response:', response.data);
+      //console.log('Subscription response:', response.data);
       
       // Calculate new subscription state based on toggle action
       const newSubscriptionState = !isSubscribed;
@@ -183,7 +183,7 @@ const VideoPlayer = () => {
       });
       
       const updatedVideoData = videoResponse.data.data;
-      console.log('Updated video data after subscription change:', updatedVideoData);
+     // console.log('Updated video data after subscription change:', updatedVideoData);
       
       // Update video data with fresh info from server
       setVideo(updatedVideoData);
@@ -203,7 +203,7 @@ const VideoPlayer = () => {
       }
       
     } catch (err) {
-      console.error('Error toggling subscription:', err);
+     // console.error('Error toggling subscription:', err);
       // Restore previous state on error
       setIsSubscribed(isSubscribed);
       setSubscriberCount(subscriberCount);
@@ -222,8 +222,8 @@ const VideoPlayer = () => {
   // Debug effect to log video object when it changes
   useEffect(() => {
     if (video) {
-      console.log('Current video object:', video);
-      console.log('Available fields:', Object.keys(video));
+      // console.log('Current video object:', video);
+      // console.log('Available fields:', Object.keys(video));
       console.log('Likes related fields:', {
         likes: video.likes,
         likesCount: video.likesCount,
@@ -294,7 +294,7 @@ const VideoPlayer = () => {
       </div>
     );
   }
-console.log("FINAL VIDEO URL:", video?.videoFile);
+//console.log("FINAL VIDEO URL:", video?.videoFile);
   return (
     <div className="px-4 py-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

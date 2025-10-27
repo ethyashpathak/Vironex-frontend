@@ -48,7 +48,7 @@ const Login = () => {
       const { data } = response;
       
       // Debug log to see the structure of the response
-      console.log("Login response:", data);
+      //console.log("Login response:", data);
       
       // Store tokens from response body as backup
       if (data?.data?.accessToken) {
@@ -75,7 +75,7 @@ const Login = () => {
 
   const handleForgotPassword = () => {
     // Navigate to forgot password page or show modal
-    console.log('Forgot password clicked');
+    //console.log('Forgot password clicked');
     // Implement later: navigate('/forgot-password');
   };
 

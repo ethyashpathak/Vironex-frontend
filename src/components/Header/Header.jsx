@@ -19,7 +19,7 @@ const Header = () => {
   const [error, setError] = useState(null);
   const [userProfileData, setUserProfileData] = useState(null);
   
-  console.log("Auth Status:", { isLoggedIn, userData });
+  //console.log("Auth Status:", { isLoggedIn, userData });
   
   const handleSearch = (e) => {
     e.preventDefault();
@@ -78,14 +78,14 @@ const Header = () => {
         withCredentials: true
       });
       
-      console.log('User data response:', response.data);
+      //console.log('User data response:', response.data);
       
       if (response.data?.data) {
         setUserProfileData(response.data.data);
         
         if (response.data.data.avatar) {
           setAvatar(response.data.data.avatar);
-          console.log('Avatar URL set:', response.data.data.avatar);
+          //console.log('Avatar URL set:', response.data.data.avatar);
         } else {
           console.warn('No avatar found in user data');
           setAvatar(null);
