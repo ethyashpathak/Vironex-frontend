@@ -71,14 +71,14 @@ export const debugAuthToken = () => {
     console.warn('No access token found in localStorage');
   } else {
     const tokenInfo = getTokenInfo(accessToken);
-    console.log('Access Token Info:', tokenInfo);
+   // console.log('Access Token Info:', tokenInfo);
   }
   
   if (!refreshToken) {
     console.warn('No refresh token found in localStorage');
   } else {
     const refreshTokenInfo = getTokenInfo(refreshToken);
-    console.log('Refresh Token Info:', refreshTokenInfo);
+    //console.log('Refresh Token Info:', refreshTokenInfo);
   }
   
   console.groupEnd();

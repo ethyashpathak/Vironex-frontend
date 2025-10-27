@@ -46,8 +46,8 @@ const serializedParams = JSON.stringify(params);
           sortType: params.sortType || 'desc'
         }).toString();
         
-        console.log(`Making request to: ${endpoint}?${queryParams}`);
-        console.log(`With auth token: Bearer ${accessToken.substring(0, 15)}...`);
+        // console.log(`Making request to: ${endpoint}?${queryParams}`);
+        // console.log(`With auth token: Bearer ${accessToken.substring(0, 15)}...`);
         
         // Always get a fresh axios instance with the latest token
         let response;
@@ -73,7 +73,7 @@ const serializedParams = JSON.stringify(params);
           });
         }
         
-        console.log("API Response:", response.data);
+        //console.log("API Response:", response.data);
         
 
         const responseData = response.data.data;
@@ -88,13 +88,13 @@ const serializedParams = JSON.stringify(params);
           console.error('Response status:', err.response.status);
           
           if (err.response.status === 401) {
-            console.log("Handling 401 error - attempting to refresh token");
+           // console.log("Handling 401 error - attempting to refresh token");
             
             // Use our dedicated token refresh utility
             const refreshSuccess = await refreshAccessToken();
             
             if (refreshSuccess) {
-              console.log("Token refreshed successfully, retrying request");
+             // console.log("Token refreshed successfully, retrying request");
               // Retry the original request with the new token
               fetchVideos(); // Call this function again to retry
               return;

@@ -21,10 +21,10 @@ const VideoPlayer = () => {
   // Debug effect for authentication state
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    console.log('Authentication state:', {
-      isAuthenticated: !!accessToken,
-      tokenLength: accessToken ? accessToken.length : 0
-    });
+    // console.log('Authentication state:', {
+    //   isAuthenticated: !!accessToken,
+    //   tokenLength: accessToken ? accessToken.length : 0
+    // });
   }, []);
 
   useEffect(() => {
@@ -44,10 +44,10 @@ const VideoPlayer = () => {
         
         // console.log('Full API response:', response);
         // console.log('Video data from API:', response.data.data);
-        console.log('Response structure:', {
-          responseData: response.data,
-          videoData: response.data.data,
-        });
+        // console.log('Response structure:', {
+        //   responseData: response.data,
+        //   videoData: response.data.data,
+        // });
         
         // Check if the API response contains likes information
         const videoData = response.data.data;
@@ -62,12 +62,12 @@ const VideoPlayer = () => {
         
         // Set subscription state if available in the API response
         if (videoData.owner) {
-          console.log('Video owner data:', {
-            id: videoData.owner._id,
-            fullName: videoData.owner.fullName,
-            isSubscribed: videoData.owner.isSubscribed,
-            subscribersCount: videoData.owner.subscribersCount
-          });
+          // console.log('Video owner data:', {
+          //   id: videoData.owner._id,
+          //   fullName: videoData.owner.fullName,
+          //   isSubscribed: videoData.owner.isSubscribed,
+          //   subscribersCount: videoData.owner.subscribersCount
+          // });
           
           setIsSubscribed(!!videoData.owner.isSubscribed);
           setSubscriberCount(videoData.owner.subscribersCount || 0);
@@ -77,7 +77,7 @@ const VideoPlayer = () => {
         
         setIsLoading(false);
       } catch (err) {
-        console.error('Error fetching video details:', err);
+        //console.error('Error fetching video details:', err);
         setError('Could not load video. Please try again later.');
         setIsLoading(false);
       }
@@ -148,7 +148,7 @@ const VideoPlayer = () => {
       return;
     }
     
-    console.log('Attempting to subscribe/unsubscribe to channel ID:', channelId);
+    //console.log('Attempting to subscribe/unsubscribe to channel ID:', channelId);
     
     setIsSubscribing(true);
     try {
@@ -193,10 +193,10 @@ const VideoPlayer = () => {
         const isSubscribedFromServer = !!updatedVideoData.owner.isSubscribed;
         const subscribersFromServer = updatedVideoData.owner.subscribersCount || 0;
         
-        console.log('Subscription status from server:', {
-          isSubscribedFromServer,
-          subscribersFromServer
-        });
+        // console.log('Subscription status from server:', {
+        //   isSubscribedFromServer,
+        //   subscribersFromServer
+        // });
         
         setIsSubscribed(isSubscribedFromServer);
         setSubscriberCount(subscribersFromServer);
@@ -224,11 +224,11 @@ const VideoPlayer = () => {
     if (video) {
       // console.log('Current video object:', video);
       // console.log('Available fields:', Object.keys(video));
-      console.log('Likes related fields:', {
-        likes: video.likes,
-        likesCount: video.likesCount,
-        likeCount: video.likeCount
-      });
+      // console.log('Likes related fields:', {
+      //   likes: video.likes,
+      //   likesCount: video.likesCount,
+      //   likeCount: video.likeCount
+      // });
     }
   }, [video]);
 
@@ -257,18 +257,18 @@ const VideoPlayer = () => {
   
   // Debug effect to monitor subscription state changes
   useEffect(() => {
-    console.log('Subscription state changed:', {
-      isSubscribed,
-      subscriberCount,
-      channelId: video?.owner?._id,
-      isAuthenticated: !!localStorage.getItem('accessToken'),
-      videoOwner: video?.owner ? {
-        id: video.owner._id,
-        fullName: video.owner.fullName,
-        isSubscribed: video.owner.isSubscribed,
-        subscribersCount: video.owner.subscribersCount
-      } : 'Not available'
-    });
+    // console.log('Subscription state changed:', {
+    //   isSubscribed,
+    //   subscriberCount,
+    //   channelId: video?.owner?._id,
+    //   isAuthenticated: !!localStorage.getItem('accessToken'),
+    //   videoOwner: video?.owner ? {
+    //     id: video.owner._id,
+    //     fullName: video.owner.fullName,
+    //     isSubscribed: video.owner.isSubscribed,
+    //     subscribersCount: video.owner.subscribersCount
+    //   } : 'Not available'
+    // });
   }, [isSubscribed, subscriberCount, video?.owner]);
 
   if (isLoading) {

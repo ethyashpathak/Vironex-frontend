@@ -53,7 +53,7 @@ const Login = () => {
       // Store tokens from response body as backup
       if (data?.data?.accessToken) {
         localStorage.setItem('accessToken', data.data.accessToken);
-        console.log("Token stored:", data.data.accessToken.substring(0, 20) + "...");
+       // console.log("Token stored:", data.data.accessToken.substring(0, 20) + "...");
       } else {
         console.warn("No access token found in response body - may be using cookie authentication only");
       }

@@ -22,11 +22,11 @@ export const useChannelData = (username) => {
       setError('');
       try {
         // Log the request URL and authorization header
-        console.log(`Fetching channel data for: ${username}`);
-        console.log(`API URL: ${server}/users/channel/${username}`);
+       // console.log(`Fetching channel data for: ${username}`);
+        //console.log(`API URL: ${server}/users/channel/${username}`);
         
         const token = localStorage.getItem('accessToken');
-        console.log(`Token available: ${!!token}`);
+        //console.log(`Token available: ${!!token}`);
         
         const response = await axios.get(`${server}/users/channel/${username}`, {
           headers: {
@@ -35,16 +35,16 @@ export const useChannelData = (username) => {
           }
         });
         
-        console.log('Channel data response:', response.data);
+        //console.log('Channel data response:', response.data);
         setChannelData(response.data.data);
       } catch (err) {
-        console.error('Error fetching channel data:', err);
-        console.error('Request details:', {
-          url: `${server}/users/channel/${username}`,
-          status: err.response?.status,
-          statusText: err.response?.statusText,
-          responseData: err.response?.data
-        });
+        // console.error('Error fetching channel data:', err);
+        // console.error('Request details:', {
+        //   url: `${server}/users/channel/${username}`,
+        //   status: err.response?.status,
+        //   statusText: err.response?.statusText,
+        //   responseData: err.response?.data
+        // });
         setError(err.response?.data?.message || 'Could not load channel information.');
       } finally {
         setIsLoading(false);

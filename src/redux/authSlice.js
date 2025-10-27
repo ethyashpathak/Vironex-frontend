@@ -11,7 +11,7 @@ const authSlice = createSlice({
     reducers: {
         login : (state , action) => {
            state.status = true;
-           console.log("in slice ", action);
+          // console.log("in slice ", action);
            
            // Store the user data correctly from the response structure
            // The API returns user data in data.data.user

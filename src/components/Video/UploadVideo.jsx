@@ -183,7 +183,7 @@ const UploadVideo = () => {
         }
       });
       
-      console.log('Upload response:', response.data);
+      //console.log('Upload response:', response.data);
       
       if (response.data.success) {
         setSuccess(true);
