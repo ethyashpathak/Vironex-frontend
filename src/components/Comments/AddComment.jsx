@@ -33,7 +33,7 @@ const AddComment = ({ videoId, onCommentAdded }) => {
           withCredentials: true
         });
         
-        //console.log('User profile data response:', response.data);
+        
         
         if (response.data?.data) {
           setProfileData(response.data.data);
