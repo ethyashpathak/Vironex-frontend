@@ -5,6 +5,7 @@ import { server } from '../../constants';
 import { FaThumbsUp, FaThumbsDown, FaShare, FaFlag, FaRegBookmark } from 'react-icons/fa';
 import VideoGrid from './VideoGrid';
 import CommentsList from '../Comments/CommentsList';
+import { axiosAuth } from '../../utils/axiosConfig';
 
 const VideoPlayer = () => {
   const { videoId } = useParams();
@@ -17,6 +18,76 @@ const VideoPlayer = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscriberCount, setSubscriberCount] = useState(0);
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [userPlaylists, setUserPlaylists] = useState([]);
+  const [loadingPlaylists, setLoadingPlaylists] = useState(false);
+
+ const fetchUserPlaylists = async () => {
+  setLoadingPlaylists(true);
+
+  try {
+    const userRes = await axiosAuth.get(`${server}/users/current-user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+
+    const userId = userRes.data.data._id;
+
+    const playlistRes = await axiosAuth.get(
+      `${server}/playlist/user/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+
+    setUserPlaylists(playlistRes.data.data.playlist || []);
+  } catch (err) {
+    console.error("Error loading playlists:", err);
+  }
+
+  setLoadingPlaylists(false);
+};
+
+useEffect(() => {
+  if (showPlaylistModal) {
+    fetchUserPlaylists();
+  }
+}, [showPlaylistModal]);
+
+const toggleVideoInPlaylist = async (pl) => {
+  try {
+    const videoExists = pl.videos?.includes(videoId);
+
+    if (videoExists) {
+      await axiosAuth.patch(
+        `${server}/playlist/remove/${videoId}/${pl._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+    } else {
+      await axiosAuth.patch(
+        `${server}/playlist/add/${videoId}/${pl._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+    }
+
+    fetchUserPlaylists(); // Refresh list
+  } catch (err) {
+    console.error("Error adding/removing video:", err);
+  }
+};
 
   // Debug effect for authentication state
   useEffect(() => {
@@ -293,7 +364,11 @@ const VideoPlayer = () => {
         Video not found
       </div>
     );
+
   }
+  
+
+
 //console.log("FINAL VIDEO URL:", video?.videoFile);
   return (
     <div className="px-4 py-4">
@@ -343,10 +418,14 @@ const VideoPlayer = () => {
                   <span>Share</span>
                 </button>
                 
-                <button className="flex items-center gap-1">
+               <button 
+                  className="flex items-center gap-1"
+                  onClick={() => setShowPlaylistModal(true)}
+                >
                   <FaRegBookmark />
                   <span>Save</span>
                 </button>
+
                 
                 <button className="flex items-center gap-1">
                   <FaFlag />
@@ -419,6 +498,50 @@ const VideoPlayer = () => {
           />
         </div>
       </div>
+      {showPlaylistModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-[#1f1f1f] p-6 rounded-xl w-80">
+      <h2 className="text-xl font-semibold mb-4 text-white">
+        Save to playlist
+      </h2>
+
+      {loadingPlaylists ? (
+        <p className="text-gray-400">Loading playlists...</p>
+      ) : userPlaylists.length === 0 ? (
+        <p className="text-gray-400">No playlists found.</p>
+      ) : (
+        <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
+          {userPlaylists.map((pl) => {
+            const containsVideo = pl.videos?.includes(videoId);
+
+            return (
+              <label
+                key={pl._id}
+                className="flex items-center gap-3 cursor-pointer text-white"
+              >
+                <input
+                  type="checkbox"
+                  checked={containsVideo}
+                  onChange={() => toggleVideoInPlaylist(pl)}
+                  className="w-5 h-5"
+                />
+                <span>{pl.name}</span>
+              </label>
+            );
+          })}
+        </div>
+      )}
+
+      <button
+        className="mt-4 w-full bg-[#ff3b5c] hover:bg-[#e23953] text-white py-2 rounded-lg transition"
+        onClick={() => setShowPlaylistModal(false)}
+      >
+        Done
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

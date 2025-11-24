@@ -16,6 +16,8 @@ import PlaylistGrid from './components/Playlists/PlaylistGrid.jsx'
 import Subscriptions from './components/Subscription/Subscriptions.jsx'
 import UploadVideo from './components/Video/UploadVideo.jsx'
 import WatchHistory from './components/Video/WatchHistory.jsx'
+import PlaylistDetails from './components/Playlists/PlaylistDetails.jsx'
+import CreatePlaylist from './components/Playlists/CreatePlaylist.jsx'
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -83,10 +85,24 @@ createRoot(document.getElementById('root')).render(
               </App>
             </ProtectedRoute>
           } />
+          <Route path="/playlist/:playlistId" element={
+            <ProtectedRoute>
+              <App>
+                <PlaylistDetails />
+              </App>
+            </ProtectedRoute>
+          } />
           <Route path="/playlists" element={
             <ProtectedRoute>
               <App>
                 <PlaylistGrid />
+              </App>
+            </ProtectedRoute>
+          } />
+           <Route path="/create-playlist" element={
+            <ProtectedRoute>
+              <App>
+                <CreatePlaylist />
               </App>
             </ProtectedRoute>
           } />
